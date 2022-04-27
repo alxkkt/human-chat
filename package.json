@@ -28,6 +28,9 @@
   },
   "dependencies": {
     "@vimeo/player": "^2.16.4",
+    "dotenv": "^16.0.0",
+    "dotenv-parse-variables": "^2.0.0",
+    "firebase": "^9.6.11",
     "lodash.throttle": "^4.1.1"
   },
   "customDistStructure": {
