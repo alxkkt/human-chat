@@ -5,10 +5,10 @@
 import { authWithPopup } from './service';
 
 const ref = {
-  btnSingIn: document.querySelector('.js-btn-login'),
+  btnSignIn: document.querySelector('.js-btn-login'),
 };
 
-ref.btnSingIn.addEventListener('click', init);
+ref.btnSignIn.addEventListener('click', init);
 
 function init(e) {
   authWithPopup();
