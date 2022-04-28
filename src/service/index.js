@@ -1,14 +1,33 @@
 // import 'dotenv/config';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../js/config';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signOut,
+} from 'firebase/auth';
 
+import { authAccess, authDecline } from '../';
 const app = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 
 const auth = getAuth();
 
+onAuthStateChanged(auth, user => {
+  if (user) {
+    authAccess(user);
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    // ...
+  } else {
+    authDecline();
+    // User is signed out
+    // ...
+  }
+});
 function authWithPopup() {
   signInWithPopup(auth, provider)
     .then(result => {
@@ -31,4 +50,14 @@ function authWithPopup() {
     });
 }
 
-export { authWithPopup };
+function onClickSignOut() {
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch(error => {
+      // An error happened.
+    });
+}
+
+export { authWithPopup, onClickSignOut };

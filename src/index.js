@@ -2,14 +2,26 @@
 
 // const env = dotenvParseVariables(process.env);
 // console.log(env);
-import { authWithPopup } from './service';
+import { authWithPopup, onClickSignOut } from './service';
+import { btnSignIn, btnSignOut, textWindow } from './js/refs';
 
-const ref = {
-  btnSignIn: document.querySelector('.js-btn-login'),
-};
+btnSignIn.addEventListener('click', authWithPopup);
+btnSignOut.addEventListener('click', onClickSignOut);
 
-ref.btnSignIn.addEventListener('click', init);
-
-function init(e) {
-  authWithPopup();
+function hiddenToggle(ref, flag = true) {
+  ref.hidden = flag;
 }
+
+function authAccess(user) {
+  hiddenToggle(btnSignIn);
+  hiddenToggle(btnSignOut, false);
+  hiddenToggle(textWindow, false);
+}
+
+function authDecline() {
+  hiddenToggle(btnSignIn, false);
+  hiddenToggle(btnSignOut);
+  hiddenToggle(textWindow);
+}
+
+export { authAccess, authDecline };
