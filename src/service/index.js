@@ -1,4 +1,5 @@
 // import 'dotenv/config';
+import { getDatabase, ref, push, onValue } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../js/config';
 import {
@@ -9,12 +10,14 @@ import {
   signOut,
 } from 'firebase/auth';
 
-import { authAccess, authDecline } from '../';
+import { authAccess, authDecline, viewUpdate } from '../';
 const app = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 
 const auth = getAuth();
+
+const db = getDatabase();
 
 onAuthStateChanged(auth, user => {
   if (user) {
@@ -60,4 +63,24 @@ function onClickSignOut() {
     });
 }
 
-export { authWithPopup, onClickSignOut };
+function pushData(data) {
+  push(ref(db, 'messages'), data)
+    .then(() => {
+      console.log(`success`);
+      // Data saved successfully!
+    })
+    .catch(error => {
+      console.log(`Error`);
+      // The write failed...
+    });
+}
+
+const starCountRef = ref(db, 'messages');
+onValue(starCountRef, snapshot => {
+  const data = snapshot.val();
+  console.log(data);
+  viewUpdate(Object.values(data));
+  // updateStarCount(postElement, data);
+});
+
+export { authWithPopup, onClickSignOut, pushData };

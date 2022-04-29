@@ -80,3 +80,7 @@ button {
   transform: translateY(-50%);
   right: 20px;
 }
+.avatar {
+  border-radius: 50%;
+  display: block;
+}
