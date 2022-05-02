@@ -4,5 +4,6 @@ const textWindow = document.querySelector('.js-wrapper');
 const btnSend = document.querySelector(`.js-send-message`);
 const textArea = document.querySelector(`.js-message-area`);
 const textContainer = document.querySelector(`.js-container`);
+const fileLoad = document.querySelector('.js-file-load');
 
-export { btnSignIn, btnSignOut, textWindow, btnSend, textArea, textContainer };
+export { btnSignIn, btnSignOut, textWindow, btnSend, textArea, textContainer, fileLoad };

@@ -4,7 +4,16 @@
 // console.log(env);
 
 import { authWithPopup, onClickSignOut, pushData } from './service';
-import { btnSignIn, btnSignOut, textWindow, btnSend, textArea, textContainer } from './js/refs';
+import { uploadUserFile } from './service/storage-api';
+import {
+  btnSignIn,
+  btnSignOut,
+  textWindow,
+  btnSend,
+  textArea,
+  textContainer,
+  fileLoad,
+} from './js/refs';
 import { markup } from './js/markup';
 
 btnSignIn.addEventListener('click', authWithPopup);
@@ -55,11 +64,17 @@ function getTime() {
 }
 function viewUpdate(arr) {
   const dataMarkup = markup(arr, userId);
-  console.log(dataMarkup);
   addMessages(dataMarkup);
 }
 function addMessages(str = '') {
   textWindow.innerHTML = str;
+}
+
+fileLoad.addEventListener('change', addCustomerFile);
+
+function addCustomerFile(e) {
+  const file = e.target.files[0];
+  uploadUserFile(file);
 }
 
 export { authAccess, authDecline, viewUpdate };
