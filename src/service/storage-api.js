@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getStorage, uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage';
 import { firebaseConfig } from '../js/config';
-
+import { onStatusLoader } from '../';
 const app = initializeApp(firebaseConfig);
 const storage = getStorage();
 
@@ -17,6 +17,7 @@ function uploadUserFile(file) {
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log('Upload is ' + progress + '% done');
+      onStatusLoader(parseInt(progress));
     },
     error => {
       console.log(error.code);

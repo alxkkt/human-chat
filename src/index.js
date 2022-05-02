@@ -13,6 +13,7 @@ import {
   textArea,
   textContainer,
   fileLoad,
+  loaderStatus,
 } from './js/refs';
 import { markup } from './js/markup';
 
@@ -77,4 +78,8 @@ function addCustomerFile(e) {
   uploadUserFile(file);
 }
 
-export { authAccess, authDecline, viewUpdate };
+function onStatusLoader(process) {
+  loaderStatus.style.width = process + '%';
+}
+
+export { authAccess, authDecline, viewUpdate, onStatusLoader };

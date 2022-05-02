@@ -17,7 +17,13 @@
     <div class="container js-container" hidden>
       <div class="wrapper js-wrapper"></div>
       <div class="box">
-        <input type="file" class="file-load js-file-load" />
+        <div class="loader-line">
+          <div class="inner-loader js-inner-loader"></div>
+        </div>
+        <label for="loader" class="label"
+          ><svg width="20" height="20"><use href="./img/symbol-defs.svg#icon-attachment"></use></svg
+        ></label>
+        <input id="loader" type="file" class="file-load js-file-load" />
         <textarea name="message-area" class="message-area js-message-area"></textarea>
         <button class="send-message js-send-message" type="button">Надіслати</button>
       </div>
