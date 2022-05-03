@@ -1,7 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getStorage, uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage';
 import { firebaseConfig } from '../js/config';
-import { onStatusLoader } from '../';
+import { getStorage, uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage';
+
+import { loaderWrapper, createDataObject } from '../';
+import { pushData } from './';
+
 const app = initializeApp(firebaseConfig);
 const storage = getStorage();
 
@@ -17,7 +20,7 @@ function uploadUserFile(file) {
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log('Upload is ' + progress + '% done');
-      onStatusLoader(parseInt(progress));
+      loaderWrapper(parseInt(progress));
     },
     error => {
       console.log(error.code);
@@ -28,6 +31,7 @@ function uploadUserFile(file) {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
         console.log('File available at', downloadURL);
+        pushData(createDataObject('', '', 'picture', downloadURL));
       });
     },
   );

@@ -28,6 +28,10 @@ let userId = null;
 let photoURL = null;
 
 function authAccess(user) {
+  if (!user) {
+    return;
+  }
+
   hiddenToggle(btnSignIn);
   hiddenToggle(btnSignOut, false);
   hiddenToggle(textContainer, false);
@@ -48,12 +52,12 @@ function getValue(e) {
     return;
   }
   textArea.value = ``;
-  pushData(createDataObject(userId, photoURL, textValue));
+  pushData(createDataObject(photoURL, textValue, 'message'));
 }
 
-function createDataObject(uid, avatar, message) {
+function createDataObject(avatar, message, type, picture = '') {
   const date = getTime();
-  return { uid, avatar, message, date };
+  return { uid: userId, avatar, message, date, type, picture };
 }
 
 function getTime() {
@@ -82,4 +86,23 @@ function onStatusLoader(process) {
   loaderStatus.style.width = process + '%';
 }
 
-export { authAccess, authDecline, viewUpdate, onStatusLoader };
+function loaderWrapper(percent) {
+  onStatusLoader(percent);
+  const parent = loaderStatus.parentNode;
+  if (percent > 0 && percent < 99) {
+    togglesShoveElement(parent);
+  } else {
+    togglesShoveElement(parent, false);
+  }
+}
+function togglesShoveElement(el, flag = true) {
+  if (flag) {
+    if (el.classList.contains('visually-hidden')) {
+      el.classList.remove('visually-hidden');
+    }
+  } else {
+    el.classList.add('visually-hidden');
+  }
+}
+
+export { authAccess, authDecline, viewUpdate, onStatusLoader, loaderWrapper, createDataObject };
