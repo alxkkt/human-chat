@@ -11,6 +11,7 @@ import {
 } from 'firebase/auth';
 
 import { authAccess, authDecline, viewUpdate, createDataObject } from '../';
+
 const app = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
